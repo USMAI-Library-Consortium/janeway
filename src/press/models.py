@@ -98,6 +98,14 @@ class Press(AbstractSiteModel):
         "of every journal, to display publisher "
         "address or other essential info. ",
     )
+    hero_image = models.ForeignKey(
+        "core.File",
+        null=True,
+        blank=True,
+        related_name="press_hero_image",
+        verbose_name="Press Hero",
+        on_delete=models.SET_NULL,
+    )
     secondary_image = SVGImageField(
         upload_to=cover_images_upload_path,
         null=True,

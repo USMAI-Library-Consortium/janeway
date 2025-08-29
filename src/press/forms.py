@@ -53,16 +53,25 @@ class PressForm(forms.ModelForm):
         press = super(PressForm, self).save(commit=False)
         request = GlobalRequestMiddleware.get_current_request()
 
-        file = self.cleaned_data.get("press_logo", None)
-
-        if file:
-            file = files.save_file_to_press(request, file, "Press Logo", "")
+        press_logo_file = self.cleaned_data.get("press_logo", None)
+        if press_logo_file:
+            press_logo_file = files.save_file_to_press(request, press_logo_file, "Press Logo", "")
 
             # Delete the old file from the disk
             if press.thumbnail_image:
                 press.thumbnail_image.delete()
 
-            press.thumbnail_image = file
+            press.thumbnail_image = press_logo_file
+
+        press_hero_file = self.cleaned_data.get("press_hero", None)
+        if press_hero_file:
+            press_hero_file = files.save_file_to_press(request, press_hero_file, "Press Hero", "")
+
+            # Delete the old file from the disk
+            if press.hero_image:
+                press.hero_image.delete()
+
+            press.hero_image = press_hero_file
 
         if commit:
             press.save()

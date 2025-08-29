@@ -183,6 +183,12 @@
                 {% include "press/nav.html" %}
             {% endif %}
         {% endblock navbar %}
+        {% if not request.journal and not request.repository %}
+            <a href="/">
+                <img src="{% url 'press_hero_download' %}" alt="">
+                <span class="sr-only">{% trans 'Home' %}</span>
+            </a>
+        {% endif  %}
     </header>
 
     <main id="main-content">
