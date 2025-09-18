@@ -124,8 +124,14 @@ def journals(request):
 
     template = "press/press_journals.html"
 
+    filter_val = request.GET.get("filter", "").lower()
+    journals = [
+        j for j in request.press.public_journals
+        if filter_val in j.name.lower()
+    ]
+
     context = {
-        "journals": request.press.public_journals,
+        "journals": journals,
     }
 
     return render(request, template, context)
@@ -219,7 +225,8 @@ def edit_press(request):
 
     press = request.press
     form = forms.PressForm(
-        instance=press, initial={"press_logo": press.thumbnail_image}
+        instance=press, initial={"press_logo": press.thumbnail_image,
+                                 "press_hero": press.hero_image}
     )
 
     if request.POST:

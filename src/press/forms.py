@@ -20,6 +20,11 @@ class PressForm(forms.ModelForm):
         widget=JanewayFileInput,
     )
 
+    press_hero = forms.FileField(
+        required=False,
+        widget=JanewayFileInput,
+    )
+
     class Meta:
         model = models.Press
         fields = (
@@ -27,6 +32,8 @@ class PressForm(forms.ModelForm):
             "main_contact",
             "theme",
             "description",
+            "homepage_h1_text",
+            "homepage_slogan",
             "footer_description",
             "journal_footer_text",
             "secondary_image",
@@ -44,6 +51,7 @@ class PressForm(forms.ModelForm):
         )
         widgets = {
             "theme": forms.Select(choices=logic.get_theme_list()),
+            "homepage_slogan": TinyMCE(),
             "footer_description": TinyMCE(),
             "journal_footer_text": TinyMCE(),
             "description": TinyMCE(),

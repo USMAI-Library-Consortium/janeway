@@ -86,6 +86,8 @@ class Press(AbstractSiteModel):
         verbose_name="Publisher description",
         help_text="This will appear in web search results and on social media when the press URL is shared",
     )
+    homepage_h1_text = models.CharField(blank=True, max_length=30, verbose_name="Homepage H1 Text", help_text="The H1 to display on the press homepage hero. Default is the press name if blank.")
+    homepage_slogan = JanewayBleachField(blank=True, verbose_name="Homepage Slogan", help_text="A slogan to show in the Janeway hero. Optional.")
     footer_description = JanewayBleachField(
         blank=True,
         verbose_name="Footer text",

@@ -184,10 +184,7 @@
             {% endif %}
         {% endblock navbar %}
         {% if not request.journal and not request.repository %}
-            <a href="/">
-                <img src="{% url 'press_hero_download' %}" alt="">
-                <span class="sr-only">{% trans 'Home' %}</span>
-            </a>
+        <img class="hero" src="{% url 'press_hero_download' %}" alt="">
         {% endif  %}
     </header>
 
