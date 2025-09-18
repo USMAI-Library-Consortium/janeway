@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block body %}
-
     <div id="article_opener" class="row">
     {% if not journal_settings.article.disable_article_large_image %}
         <div class="col-md-12">
@@ -46,7 +45,11 @@
             </div>
         </div>
     {% endif %}
+
     </div>
+
+        {% include "elements/journal/reading.html" %}
+
     <div id="article_metadata" class="row">
 
         <div class="col-md-7">
@@ -65,10 +68,7 @@
                     {% include "elements/journal/article_keywords.html" with keywords=article.keywords  %}
                 {% endif %}
                 {% if article.is_published or proofing %}
-                    <h2>{% trans "How to Cite" %}:</h2>
-                    <div id="article_how_to_cite">
-                        <p>{{ article.how_to_cite|safe }} </p>
-                    </div>
+                    {% include "elements/journal/cite.html" %}
                 {% endif %}
                 {% if article.rights %}
                     <h2>{% trans "Rights" %}:</h2>
@@ -368,10 +368,10 @@
              {% hook 'article_sidebar' %}
             </section>
              {% if article_content %}
-                <div class="sticky-top article-menu" id="toc-section">
+                <div class="sticky-toc article-menu" id="toc-section">
                     <section aria-labelledby="toc-title">
                         <h2 id="toc-title">{% trans "Table of Contents" %}</h2>
-                        <ul id="toc" class="table-of-contents"></ul>
+                        <ul id="toc" class="no-bullet-list table-of-contents"></ul>
                     </section>
                 </div>
             {% endif %}
@@ -394,14 +394,16 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
     <script src="{% static 'material/toc.js' %}"></script>
     {% hook 'article_js_block' %}
-     <script>
-    $('.table-expansion').each(function(){
-        var child = $(this).children(":first")
-        child.append('<br /><button type="button" class="btn btn-link" data-toggle="modal" data-target="#table-'+ $(this).attr('id') +'">{% trans 'View Larger Table' %}</button>')
-    });
+    <script src="{% static 'common/js/table-expansion.js' %}"></script>
+    <script>
+        initTableExpansion({
+            modalSelector: '.modal',
+            linkTemplate: '<br /><button type="button" class="btn btn-link" data-toggle="modal" data-target="#table-{id}"  aria-describedby="{id}-label">{% trans "View Larger Table" %}</button>',
+        });
     </script>
     <script src="{% static "common/lightbox/js/lightbox.js" %}"></script>
     <script src="{% static "common/js/clipboard.js" %}"></script>
+    <script src="{% static "common/js/text_readability.js" %}"></script>
     <script src="{% static "clean/js/tooltip-init.js" %}"></script>
     <script src="{% static "common/js/reversable-links.js" %}"></script>
 {% endblock js %}

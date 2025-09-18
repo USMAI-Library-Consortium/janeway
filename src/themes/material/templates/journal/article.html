@@ -55,10 +55,15 @@
                         </span>
                     </div>
                 {% endif %}
+                
                 <div>
 
                 </div>
-            </div>
+            </div>   
+        </div>
+
+        <div id="reading-sticky" class=" col s12 show-on-small hide-on-med-and-up">
+            {% include "elements/journal/reading.html" %}
         </div>
 
         <div id="article" class="col m8 s12">
@@ -90,10 +95,7 @@
                     {% endif %}
                     {% if article.is_published or proofing %}
                     {% if not journal_settings.article.suppress_how_to_cite %}
-                        <h2>{% trans "How to Cite" %}</h2>
-                        <div id="article_how_to_cite">
-                            {{ article.how_to_cite | safe }}
-                        </div>
+                        {% include "elements/journal/cite.html" %}
                         <div class="spacer">
                             <div class="divider"></div>
                         </div>
@@ -235,7 +237,9 @@
                 </article>
             {% endif %}
         </div>
-
+        <div id="reading-sticky" class="col m4 hide-on-small-only">
+            {% include "elements/journal/reading.html" %}
+        </div>
         <div class="col m4">
             <div class="card">
                 <section aria-label="{% trans 'Article Information' %}">
@@ -434,7 +438,7 @@
                         {% if doi_url %}
                         <h2>{% trans "Identifiers" %}</h2>
                         <ul>
-                            <li>DOI: <a href="{{ doi_url }}">{{ doi_url }}</a></li>
+                            <li>{% include "elements/doi_display.html" with doi=doi_url title=article.title %}</li>
                         </ul>
                         <div class="spacer">
                             <div class="divider"></div>
@@ -542,14 +546,17 @@
             }
         });
     </script>
+    <script src="{% static 'common/js/table-expansion.js' %}"></script>
     <script>
-    $('.table-expansion').each(function(){
-        var child = $(this).children(":first")
-        child.append('<br /><small><a href="#table-' + $(this).attr('id') + '" class="modal-trigger">View Larger Table<i aria-hidden="true" class="fa fa-external-link-square superscript-icon" title="opens in popup"></i><span class="sr-only">(opens in popup)." %}</span></a></small>');
-    });
+        initTableExpansion({
+            modalSelector: '.modal',
+            linkTemplate: '<button type="button" href="#table-{id}" class="btn-background modal-trigger"  aria-describedby="{id}-label">{% trans "View Larger Table" %}</button>',
+            materializeWorkarounds: true,
+        });
     </script>
     <script src="{% static "common/lightbox/js/lightbox.js" %}"></script>
     <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
     <script src="{% static "common/js/clipboard.js" %}"></script>
     <script src="{% static "common/js/reversable-links.js" %}"></script>
+    <script src="{% static "common/js/text_readability.js" %}"></script>
 {% endblock %}
