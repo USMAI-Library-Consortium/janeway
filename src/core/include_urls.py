@@ -105,6 +105,9 @@ urlpatterns = [
         r"^press/cover/$", press_views.serve_press_cover, name="press_cover_download"
     ),
     re_path(
+        r"^press/hero/$", press_views.serve_press_hero, name="press_hero_download"
+    ),
+    re_path(
         r"^press/file/(?P<file_id>\d+)/$",
         press_views.serve_press_file,
         name="serve_press_file",

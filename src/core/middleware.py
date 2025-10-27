@@ -212,6 +212,7 @@ class PressMiddleware(BaseMiddleware):
                 "core_edit_profile",
                 "core_logout",
                 "press_cover_download",
+                "press_hero_download"
                 "core_manager_index",
                 "django_summernote-editor",
                 "django_summernote-upload_attachment",

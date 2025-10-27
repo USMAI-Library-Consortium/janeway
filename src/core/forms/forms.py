@@ -504,6 +504,7 @@ class JournalImageForm(forms.ModelForm):
         model = journal_models.Journal
         fields = (
             "header_image",
+            "hero_image",
             "default_cover_image",
             "default_large_image",
             "favicon",
